@@ -31,7 +31,7 @@ GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['Your-PythonAnywhere-Username.pythonanywhere.com']
+ALLOWED_HOSTS = ['albertin0.pythonanywhere.com']
 
 
 # Application definition
