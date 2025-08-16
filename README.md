@@ -14,8 +14,8 @@ As a user, I want to save my edits to the summary.
 As a user, I want to share the final summary with others via email.
 2. Technology Stack Selection
 Backend: Django was chosen because it's a "batteries-included" framework. It provides a robust ORM (Object-Relational Mapper) for database interactions, a secure way to handle forms (CSRF protection), and a powerful templating engine, which is perfect for a project that needs both data storage and server-rendered pages.
-Frontend: Vanilla JavaScript and Tailwind CSS were selected for simplicity and rapid UI development. This approach avoids the complexity of a full frontend framework like React or Vue for a project of this scale. Tailwind allows for direct styling within the HTML, making it fast to create a modern-looking interface.
-AI Service: The Google Gemini API was chosen for its powerful generative capabilities and a straightforward Python SDK, making integration into the Django backend seamless.
+Frontend: Vanilla JavaScript(Jinja) and Tailwind CSS were selected for simplicity and rapid UI development. This approach avoids the complexity of a full frontend framework like React or Vue for a project of this scale. Tailwind allows for direct styling within the HTML, making it fast to create a modern-looking interface.
+AI Service: The Groq API with the model = "llama-3.3-70b-versatile"  was chosen for its powerful generative capabilities and a straightforward Python SDK, making integration into the Django backend seamless.
 Database: SQLite is the default for Django development. It's a simple, file-based database that requires no extra setup, making it ideal for prototyping and small-scale applications. For production, this could be swapped for PostgreSQL.
 3. Data Modeling
 We need to decide what information to store. For this app, the model is simple:
