@@ -1,0 +1,77 @@
+<!-- summarizer_project/summarizer/templates/summarizer/home.html -->
+
+{% extends 'summarizer/base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
+    <form action="{% url 'home' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% if error %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-6" role="alert">
+                <strong class="font-bold">Error:</strong>
+                <span class="block sm:inline">{{ error }}</span>
+            </div>
+        {% endif %}
+
+        <!-- File Upload Section -->
+        <div class="mb-6">
+            <label for="transcript-upload" class="block text-lg font-semibold text-gray-700 mb-2">1. Upload Transcript</label>
+            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
+                <div class="space-y-1 text-center">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <div class="flex justify-center items-center text-sm text-gray-600">
+                        <label for="transcript-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                            <span id="file-name-display">Upload a file</span>
+                            <input id="transcript-upload" name="transcript" type="file" class="sr-only" required accept=".txt">
+                        </label>
+                        <p id="drag-drop-text" class="pl-1">or drag and drop</p>
+                    </div>
+                    <p class="text-xs text-gray-500">TXT files up to 10MB</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Prompt Section -->
+        <div class="mb-8">
+            <label for="prompt" class="block text-lg font-semibold text-gray-700 mb-2">2. Custom Instructions</label>
+            <textarea id="prompt" name="prompt" rows="4" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-lg p-3" placeholder="e.g., 'Summarize in bullet points for executives' or 'Highlight only action items and decisions made.'">Summarize the key points of this meeting.</textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300">
+                Generate Summary
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('transcript-upload');
+    const fileNameDisplay = document.getElementById('file-name-display');
+    const dragDropText = document.getElementById('drag-drop-text');
+
+    if (fileInput) {
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                // If a file is selected, update the text to show the file name
+                // and hide the 'or drag and drop' text.
+                fileNameDisplay.textContent = this.files[0].name;
+                fileNameDisplay.classList.remove('text-indigo-600', 'font-medium');
+                fileNameDisplay.classList.add('text-gray-800', 'font-semibold');
+                if(dragDropText) {
+                    dragDropText.style.display = 'none';
+                }
+            }
+            // No 'else' block is needed as a file is required for submission.
+        });
+    }
+});
+</script>
+{% endblock %}
